@@ -1,0 +1,159 @@
+@startuml{kinki.png}
+
+title 貸付決議書シーケンス
+hide footbox
+
+Actor "大阪航空局" as kouku
+Actor "近畿理財局" as kinki
+Actor "森友学園" as gakuen
+Actor "財務省理財局" as honsyo
+Actor "大阪府" as oosaka
+Actor "民間の地質調査会社" as min_chousa
+Actor "学園委託設計業者" as min_sekkei
+Actor "豊中市" as toyonaka
+kouku -> kouku : S53.11.15\n空港周辺の土地買収
+kouku -> kouku : H21\n土壌調査開始
+activate kouku
+kouku <-- kouku : H24\n土壌調査終了\n地下埋設物の存在判明
+deactivate kouku
+
+kouku -> kinki : H25.4.30\n時価売り払い処分依頼提出\n(現状有姿で売払う予定)
+gakuen -> kinki : H25.6.28\n理事長が来所。\n小学校用地として取得を検討している
+activate kinki
+gakuen <-- kinki : 取得要望書の提出等、手続きについて説明
+deactivate kinki
+alt #LightBlue "削除"
+  kinki -> gakuen : H25.7.2\n土壌調査結果に関する資料貸与
+end alt
+gakuen -> kinki : H25.7.8\n取得要望を提出予定連絡（電話）
+alt #LightBlue "削除"
+  gakuen -> kouku : H25.8.21\n理事長が来局。貸付を受け、その後購入することを希望。
+  kouku -> kinki : 現行制度で対応できるのであれば貸付を検討してもらいたい
+  kinki -> honsyo : 相談
+  activate honsyo
+  kinki <-- honsyo : 貸付を検討する対応方針を指示
+  deactivate honsyo
+end alt
+
+gakuen -> kinki : H25.9.2（H25.8.26付）\n随意契約での取得等要望書を提出
+
+alt #LightBlue "削除"
+  kinki -> oosaka : H25.10.30\n認可の事前調査状況照会
+  activate oosaka
+  kinki <-- oosaka : 審査できる書類が提出されていない
+  deactivate oosaka
+
+  kinki -> oosaka : H26.2.3\n私学・大学化に認可の状況について照会
+  activate oosaka
+  kinki <-- oosaka : 資金計画の妥当性が説明できる資料提出がなく、\n新設計画書を正式に受理していない。
+  deactivate oosaka
+
+  gakuen -> kinki : H26.4.15\n開校に向けて豊中市と協議を急ぐ必要があるので\n国有地を先行して貸し付けてほしいと要請
+  activate kinki
+  gakuen <-- kinki : 審議会の答申を得る前の契約はできない、と断る
+  deactivate kinki
+
+  kinki -> gakuen : H26.4.28\n資料提出を速やかに行うように要請
+  activate gakuen
+  kinki <-- gakuen : * H26.7に予定していた府審議会への詰問をH26.12に変更して欲しい\n* 豊中市と協議を急ぐ必要があるので、\n　府が新設計画書を受理した段階で近畿理財局から豊中市に\n　締結することを証する文書を提出してもらいたい。
+  deactivate gakuen
+
+  kinki -> honsyo : H26.6.2\n対応について相談
+  activate honsyo
+  kinki <-- honsyo : 以下について協力する旨を回答\n*審査延長\n*豊中市に対して手続きのみを可能とする承諾書を提出\n*売払いを前提とした買付け
+  deactivate honsyo
+
+  gakuen -> oosaka : 設置計画書を正式受理。H26.12の私立学校審議会での詰問に向けて事務を進めると決定。
+  kinki -> toyonaka : H26.8.30\n手続きのみを可能とする承諾書を提出
+end alt
+gakuen <- kinki : 審査基準に抵触する
+alt #LightBlue "削除"
+  gakuen -> kinki : H26.10.15\nすぐに収支計画を改善することは不可能であり、\n審査基準に抵触せずに即購入はできない旨を回答
+end alt
+
+gakuen -> kinki : 経営が安定するまで国有地を借り受け、\nそのあとに購入したいと要請
+kinki -> kouku : 考えを確認
+activate kouku
+kinki <-- kouku : 至急に売払わなければならないので\nその条件で問題なし
+deactivate kouku
+kinki -> honsyo : 相談
+activate honsyo
+kinki <-- honsyo : 学園の要請に応じざるを得ない
+deactivate honsyo
+
+kinki -> kinki : 30年貸付けた後、\n国が時価で買い取るリスクがある
+kinki -> honsyo : 8年後に確実に売り払いが担保できるよう、特例として以下の措置で良いか相談\n*事業用定期借地契約を締結\n*売買予約契約を締結
+activate honsyo
+kinki <-- honsyo : 理財局長の承認
+deactivate honsyo
+kinki -> gakuen : 貸付契約書に以下を記載\n* 土壌汚染及び地下埋設物の存在に基づく損害賠償請求や貸付料減免要求に応じない。\n* 除去する場合は有益費と取り扱い後、国が学園と合意した金額を支払う。
+
+alt #LightBlue "変更前"
+  gakuen -> kinki : H26.10.21～31\nボーリング調査の実施要請
+else #White "変更後"
+  gakuen -> kinki : 日付不明\nボーリング調査の実施要請
+end alt
+activate kinki
+kinki <-> kouku : 協議
+kinki -> gakuen : 航空局が学園に一時貸付を行うことで調査許可
+deactivate kinki
+gakuen -> gakuen : ボーリング調査実施
+
+gakuen -> oosaka : H26.10.31\n学園の設置認可申請書を正式受理
+
+alt #LightBlue "削除"
+  kinki <-> gakuen : H26.11.7\n土壌汚染対策費用処理方法等について打ち合わせ
+  kinki -> gakuen : H26.11.xx\n土壌調査結果に関する資料交付
+  kinki -> gakuen : H26.12.17\n契約に向けてのスケジュール・契約について説明
+  oosaka -> oosaka : H26.12.18\n設置計画が継続審議。H27に再審議決定
+  kinki -> gakuen : H27.1.9\n貸付料の概算額を伝える
+end alt
+
+kinki <-- oosaka : H27.1.27\n条件付きで認可適当
+kinki -> kinki : H27.2.10\n国有財産近畿地方審議会で\n売払いを前提とした借地契約の処理適当の答申を得る
+
+alt #LightBlue "削除"
+  gakuen -> gakuen : 小学校開設について記者発表
+  kinki -> gakuen : H27.2.20\n予定価格決定
+  kinki <-> gakuen : H27.3.13\n貸付料の見積もり合わせを実施
+end alt
+
+alt #LightBlue "変更前"
+  gakuen -> kinki : H27.3.26\nボーリング調査結果提示\n軟弱地盤のため通常を上回る建物基礎工事が必要。\n費用負担を国に要請\n(具体的な要請金額の提示はなし)
+else #White "変更後"
+  gakuen -> kinki : H27.4.xx\nボーリング調査結果提示
+end alt
+
+kinki -> min_chousa : H27.3.31\nボーリング調査結果について意見を求める
+activate min_chousa
+alt #LightBlue "変更前"
+  kinki <-- min_chousa : 通常地盤の定義が困難なので回答は難しい
+else #White  "変更後"
+  kinki <-- min_chousa : 新たな価格形成要因であり、貸料に影響する
+end alt
+deactivate min_chousa
+
+
+alt #LightBlue "削除"
+  kinki -> min_sekkei : H27.4.2\n 基礎工事についてヒアリング
+  activate min_sekkei
+  kinki <-- min_sekkei : 杭の本数を多く必要とする見込みだが、設計中のため詳しい内容説明はできない、との説明。
+  deactivate min_sekkei
+  kinki <-> honsyo : 法律相談
+end alt
+
+alt #LightBlue "変更前"
+  kinki -> gakuen : H27.4.17\n国は当該工事費を負担しないこととするが、\n貸付料評価には当該調査結果等より地盤状況を考慮する
+else #White "変更後"
+  kinki -> gakuen : H27.4.17\n国は当該工事費を負担しないこととするが、\n貸付料評価には考慮する
+end alt
+
+alt #LightBlue "変更前"
+  kinki -> gakuen : H27.4.27\n不動産鑑定士の意見評価結果を踏まえて予定価格再決定
+  kinki <-> gakuen : H27.4.28\n貸付料合意
+else #White "変更後"
+  kinki -> gakuen : H27.4.27\n不動産鑑定士から提出された価格報告書を提示
+  kinki <-> gakuen : H27.xx.xx\n貸付料合意
+end alt
+
+@enduml

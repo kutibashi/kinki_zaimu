@@ -11,6 +11,7 @@ Actor "大阪府" as oosaka
 Actor "民間の地質調査会社" as min_chousa
 Actor "学園委託設計業者" as min_sekkei
 Actor "豊中市" as toyonaka
+Actor "近畿財務局" as kinki_zai
 kouku -> kouku : S53.11.15\n空港周辺の土地買収
 kouku -> kouku : H21\n土壌調査開始
 activate kouku
@@ -154,6 +155,31 @@ alt #LightBlue "変更前"
 else #White "変更後"
   kinki -> gakuen : H27.4.27\n不動産鑑定士から提出された価格報告書を提示
   kinki <-> gakuen : H27.xx.xx\n貸付料合意
+end alt
+
+alt #LightBlue "変更前"
+  kinki <-> gakuen : H27.4.28\n貸付料決定。契約締結日を5/7に、公正証書作成日を5/13にすることで合意。
+  kinki -> kinki : H27.4.30\n契約書等を作成
+  kinki -> gakuen : H27.5.1\n契約書等を森友学園に持参
+  activate gakuen
+  kinki <-- gakuen : 公正証書作成料負担について難色を示し書類を受け取らず
+  deactivate gakuen
+  gakuen -> kinki : H27.5.7\n契約保証金を納入。\n押印段階で納得できないとして契約は不成立。
+  kinki -> gakuen : H27.5.11\n違約金条項について説明
+  activate gakuen
+  kinki <-- gakuen : 納得せず
+  deactivate gakuen
+  kinki -> gakuen : H27.5.12\n相手方弁護士も交え再度説明。\n
+  activate gakuen
+  kinki <-- gakuen : 押印拒否
+  kinki -> gakuen : 本日契約できなければ契約手続きはいったんリセットされることを説明
+  kinki <-- gakuen : 了解
+  deactivate gakuen
+  kinki -> gakuen : H27.5.13\n貸付合意書修正案を提示
+  gakuen -> kinki_zai : H27.5.15\n違約金減額の申入れ文書を送付（内容証明郵便）
+  kinki <-> kinki_zai : 内容証明郵便への回答を5/27に行うことで調整
+else #White "変更後"
+  kinki <-> gakuen : H27.5.13に契約締結予定だったが調整が整わず、契約書等の再作成を行う。
 end alt
 
 @enduml
